@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  proxy:
+    image: aws-iot-securetunneling-localproxy
+    environment:
+      SORUCE_ACCESS_TOKEN: ${SORUCE_ACCESS_TOKEN:?error}
+    volumes:
+      - ./init.d:/docker-init.d/
+    ports:
+      - 5555:5555
+    tty: true
+    entrypoint:
+      - /home/aws-iot-securetunneling-localproxy/localproxy
+      - -r
+      - ap-northeast-1
+      - -b
+      - '0.0.0.0'
+      - -s
+      - '5555'
+      - -t
+      - ${SORUCE_ACCESS_TOKEN}
